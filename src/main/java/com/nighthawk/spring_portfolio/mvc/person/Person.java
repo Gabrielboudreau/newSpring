@@ -14,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Type;
@@ -57,6 +58,8 @@ public class Person {
     private String password;
 
     // @NonNull, etc placed in params of constructor: "@NonNull @Size(min = 2, max = 30, message = "Name (2 to 30 chars)") String name"
+    @NotNull
+    private int weight;
     @NonNull
     @Size(min = 2, max = 30, message = "Name (2 to 30 chars)")
     private String name;
@@ -79,13 +82,17 @@ public class Person {
     
 
     // Constructor used when building object from an API
-    public Person(String email, String password, String name, Date dob) {
+    public Person(String email, String password, String name, Date dob, int weight) {
         this.email = email;
         this.password = password;
         this.name = name;
         this.dob = dob;
-    }
+        this.weight = weight;
 
+    }
+    public static void tester(){
+
+    }
     // A custom getter to return age from dob attribute
     public int getAge() {
         if (this.dob != null) {
@@ -93,5 +100,13 @@ public class Person {
             return Period.between(birthDay, LocalDate.now()).getYears(); }
         return -1;
     }
-
+    public static void main(String[] args) {
+        Person person = new Person("random@gmail.com","fnweifowe", "wfwfewjf", new Date(100, 100, 100), 300);
+        System.out.println(person.getEmail());
+        System.out.println(person.getPassword());
+        System.out.println(person.getName());
+        System.out.println(person.getDob());
+        System.out.println(person.getWeight());
+        System.out.println(person.getAge());
+    }
 }
